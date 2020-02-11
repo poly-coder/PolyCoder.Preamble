@@ -25,9 +25,9 @@ module Maybe =
 
     member _.ReturnFrom x = x
 
-    member _.Delay f = f()
+    member _.Delay f = f
     
-    member _.Run f = f
+    member _.Run f = f()
 
     member _.Bind(ma, f) = ma |> bind f
 
@@ -47,12 +47,14 @@ module Maybe =
 
     member _.While(guard, body) =
       while guard() do
-        body()
+        body() |> ignore
+      zero
 
     member _.For(source: _ seq, body) =
       use enumerator = source.GetEnumerator()
       while enumerator.MoveNext() do
-        body enumerator.Current
+        body enumerator.Current |> ignore // or combine?
+      zero
 
 
 [<AutoOpen>]
