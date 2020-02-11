@@ -5,6 +5,7 @@
 
     <IsPackable>false</IsPackable>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <AssemblyName>PolyCoder.Preamble.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
