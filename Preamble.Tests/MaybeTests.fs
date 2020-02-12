@@ -1,4 +1,4 @@
-﻿module PolyCoder.OptionTests
+﻿module PolyCoder.MaybeTests
 
 open NUnit.Framework
 open FsCheck
@@ -264,3 +264,5 @@ let ``Maybe.maybe { try cexpr with | pattern_i -> expr_i } when throwing an exce
       _exn -> return value
   }
   test <@ ce = Some value @>
+
+
