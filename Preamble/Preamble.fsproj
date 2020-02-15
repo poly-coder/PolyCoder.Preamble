@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>PolyCoder.Preamble</PackageId>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
     <Authors>Iskander Sierra</Authors>
     <Company>PolyCoder</Company>
     <Product>PolyCoder FSharp Framework</Product>
@@ -18,7 +18,9 @@
     <Compile Include="Async.fs" />
     <Compile Include="AsyncFn.fs" />
     <Compile Include="Seq.fs" />
+    <Compile Include="SeqFn.fs" />
     <Compile Include="Option.fs" />
+    <Compile Include="OptionFn.fs" />
   </ItemGroup>
 
   <ItemGroup>
