@@ -15,12 +15,15 @@
 
   <ItemGroup>
     <Compile Include="Preamble.fs" />
+    <Compile Include="System.fs" />
     <Compile Include="Async.fs" />
     <Compile Include="AsyncFn.fs" />
     <Compile Include="Seq.fs" />
     <Compile Include="SeqFn.fs" />
     <Compile Include="Option.fs" />
     <Compile Include="OptionFn.fs" />
+    <Compile Include="AsyncOption.fs" />
+    <Compile Include="Result.fs" />
   </ItemGroup>
 
   <ItemGroup>

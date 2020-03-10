@@ -2,16 +2,13 @@
 
 [<RequireQualifiedAccess>]
 module Option =
-  let matches fSome fNone ma =
+  let matchWith fSome fNone ma =
     match ma with
     | Some a -> fSome a
     | _ -> fNone ()
 
   let firstSome source =
-    let folder _prev value =
-      match value with
-      | Some _ -> BreakWith value
-      | _ -> Continue
+    let folder _prev = matchWith (Some >> BreakWith) (konst Continue)
     source |> Seq.foldWhile folder None
 
   let catch f x =
@@ -20,9 +17,11 @@ module Option =
 
   let ignore ma = ma |> Option.map ignore
 
-  let toSeq ma = ma |> matches Seq.singleton (konst Seq.empty)
-  let toList ma = ma |> matches List.singleton (konst List.empty)
-  let toArray ma = ma |> matches Array.singleton (konst Array.empty)
+  let toSeq ma = ma |> matchWith Seq.singleton (konst Seq.empty)
+  
+  let toList ma = ma |> matchWith List.singleton (konst List.empty)
+  
+  let toArray ma = ma |> matchWith Array.singleton (konst Array.empty)
 
   let ifPredicate predicate value =
     if predicate value then Some value
@@ -49,7 +48,7 @@ module Maybe =
   type Builder() =
     member _.Zero() = zero
 
-    member _.Return x = Some x
+    member _.Return x = result x
 
     member _.ReturnFrom x = x
 

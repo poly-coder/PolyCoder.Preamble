@@ -24,6 +24,8 @@
     <Compile Include="SeqTests.fs" />
     <Compile Include="MaybeTests.fs" />
     <Compile Include="OrElseTests.fs" />
+    <Compile Include="MaybeAsyncTests.fs" />
+    <Compile Include="ResultAndTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

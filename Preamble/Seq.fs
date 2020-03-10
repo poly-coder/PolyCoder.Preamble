@@ -11,10 +11,13 @@ type FoldStep<'a> =
 [<RequireQualifiedAccess>]
 module Seq =
   let bind f = Seq.collect f
+  
   let ignore ma = Seq.map ignore ma
 
   let getEnumerator (source: _ seq) = source.GetEnumerator()
+  
   let getCurrent (enumerator: IEnumerator<_>) = enumerator.Current
+  
   let moveNext (enumerator: IEnumerator<_>) =
     enumerator.MoveNext()
 
