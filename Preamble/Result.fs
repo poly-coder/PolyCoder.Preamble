@@ -81,4 +81,3 @@ module ResultAnd =
 [<AutoOpen>]
 module DefaultResultAndBuilder =
   let resultAnd = ResultAnd.Builder()
-  
