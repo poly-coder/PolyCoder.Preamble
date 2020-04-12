@@ -6,4 +6,4 @@ PACKAGE_VERSION=$(xmllint --xpath '/Project/PropertyGroup[1]/Version/text()' Pre
 
 echo "Publishing $PACKAGE_ID version $PACKAGE_VERSION ..."
 
-dotnet nuget push "bin/Release/$PACKAGE_ID.$PACKAGE_VERSION.nupkg" -s https://api.nuget.org/v3/index.json -k "$1"
+dotnet nuget push "bin/Release/$PACKAGE_ID.$PACKAGE_VERSION.nupkg" -s locals
