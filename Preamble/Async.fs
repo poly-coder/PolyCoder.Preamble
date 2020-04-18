@@ -71,6 +71,7 @@ module Async =
       |> ofTask
       |> map Array.toSeq
 
+  // TODO: this is not working properly. Needs testing
   let toPromise asyncExpr =
     let mutable taskSource = TaskCompletionSource<_>()
     let locker = obj()

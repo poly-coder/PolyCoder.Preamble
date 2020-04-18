@@ -1,5 +1,6 @@
 namespace PolyCoder
 
+open System
 open System.Reflection
 
 [<RequireQualifiedAccess>]
@@ -15,3 +16,17 @@ module Exn =
       |> ignore
 
     raise exn
+
+  let findInner<'a when 'a :> exn> (exn: exn) : 'a option =
+    let rec find (e: exn) =
+      let fromSeq source = 
+        source
+          |> Seq.map find
+          |> Seq.tryFind Option.isSome
+          |> Option.flatten
+      match e with
+      | :? 'a as exn -> Some exn
+      | :? AggregateException as aggExn -> fromSeq aggExn.InnerExceptions
+      | _ -> find e.InnerException
+
+    find exn
