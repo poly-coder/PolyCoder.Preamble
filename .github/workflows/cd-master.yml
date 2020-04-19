@@ -1,8 +1,12 @@
 name: Continuous Deployment
 
+env:
+  NUGET_AUTH_TOKEN: ${{ secrets.NUGET_ORG_API_KEY }}
+
 on:
   push:
     branches: [ master ]
+    tags: [ v* ]
 
 jobs:
   build:

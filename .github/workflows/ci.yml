@@ -2,9 +2,11 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ development ]
+    branches: [ master, development ]
+    tags-ignore: [ v* ]
   pull_request:
     branches: [ master, development ]
+    tags-ignore: [ v* ]
 
 jobs:
   build:
