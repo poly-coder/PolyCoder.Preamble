@@ -71,25 +71,6 @@ module Async =
       |> ofTask
       |> map Array.toSeq
 
-  // TODO: this is not working properly. Needs testing
-  let toPromise asyncExpr =
-    let mutable taskSource = TaskCompletionSource<_>()
-    let locker = obj()
-    if isNull taskSource then
-      lock locker
-        <| fun () ->
-          if isNull taskSource then
-            // Initialize the task inside the lock to prevent double initialization
-            taskSource <- TaskCompletionSource<_>()
-            // Start the asyncExpr and register its result into the task completion source
-            async {
-              try
-                let! result = asyncExpr
-                taskSource.TrySetResult result |> ignore
-              with
-              | :? TaskCanceledException ->
-                taskSource.TrySetCanceled() |> ignore
-              | exn ->
-                taskSource.TrySetException(exn) |> ignore
-            } |> Async.Start
-    taskSource.Task |> ofTask
+  let toPromise (asyncExpr: Async<_>) =
+      Async.StartAsTask(asyncExpr)
+      |> Async.AwaitTask
