@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <PackageId>PolyCoder.Preamble</PackageId>
-    <Version>0.0.10</Version>
+    <Version>0.0.11</Version>
     <Authors>Iskander Sierra</Authors>
     <Company>PolyCoder</Company>
     <Product>PolyCoder FSharp Framework</Product>
