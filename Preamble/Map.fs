@@ -13,3 +13,4 @@ module Map =
     dict
     |> Seq.map (fun pair -> pair.Key, pair.Value)
     |> Map.ofSeq
+

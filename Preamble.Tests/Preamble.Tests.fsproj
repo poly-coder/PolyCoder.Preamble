@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Compile Include="PreambleTests.fs" />
+    <Compile Include="SystemTests.fs" />
     <Compile Include="SeqTests.fs" />
     <Compile Include="MaybeTests.fs" />
     <Compile Include="OrElseTests.fs" />
