@@ -346,3 +346,9 @@ healthchecksdb
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+.ionide
+
+coverage.json
+coverage.cobertura.xml
+/Report/

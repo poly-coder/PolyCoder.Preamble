@@ -5,8 +5,8 @@ open System
 open System.Globalization
 open System.Security.Cryptography
 
-let stringToUtf8 (str: string) = Encoding.UTF8.GetBytes(str)
-let utf8ToString (bytes: byte[]) = Encoding.UTF8.GetString(bytes)
+let toUtf8 (str: string) = Encoding.UTF8.GetBytes(str)
+let ofUtf8 (bytes: byte[]) = Encoding.UTF8.GetString(bytes)
 
 let fromBase64 (str: string) = Convert.FromBase64String(str)
 let toBase64 (bytes: byte[]) = Convert.ToBase64String(bytes)
@@ -67,5 +67,5 @@ let getShortSHA1Bytes length (bytes: byte[]) =
     Array.blit hash 0 response 0 length
     response
 
-let stringToSha1 = stringToUtf8 >> getSHA1Bytes >> toHexStringLower
-let stringToShortSha1 length = stringToUtf8 >> getShortSHA1Bytes length >> toHexStringLower
+let stringToSha1 = toUtf8 >> getSHA1Bytes >> toHexStringLower
+let stringToShortSha1 length = toUtf8 >> getShortSHA1Bytes length >> toHexStringLower

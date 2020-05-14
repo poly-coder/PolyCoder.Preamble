@@ -80,3 +80,47 @@ module Seq =
   let foldOnSome folder initialState source =
     scanOnSome folder initialState source
       |> Seq.last
+
+  let windowedAll windowSize (source: _ seq) =
+    let e = source.GetEnumerator()
+    let array = ResizeArray(windowSize: int)
+    let rec loop() = seq {
+      if e.MoveNext() then
+        array.Add(e.Current)
+        if array.Count >= windowSize then
+          yield array.ToArray()
+          array.Clear()
+        yield! loop()
+      else
+        if array.Count > 0 then yield array.ToArray()
+        e.Dispose()
+    }
+    loop()
+
+  let dfsKeyedWith (comparer: IEqualityComparer<'key>) getKey getChildren (source: seq<'item>) =
+    let foundSet = HashSet<_>(comparer)
+    let rec loop item = seq {
+      let key = getKey item
+      if foundSet.Add key then
+        yield item
+        yield! getChildren item |> Seq.collect loop
+    }
+    source |> Seq.collect loop
+
+  let dfsKeyed getKey = dfsKeyedWith EqualityComparer<_>.Default getKey
+  let dfsWith comparer getChildren = dfsKeyedWith comparer id getChildren
+  let dfs getChildren = dfsWith EqualityComparer<_>.Default getChildren
+
+  let dlsKeyedWith (comparer: IEqualityComparer<'key>) getKey getChildren (source: seq<'item>) =
+    let foundSet = HashSet<_>(comparer)
+    let rec loop item = seq {
+      let key = getKey item
+      if foundSet.Add key then
+        yield! getChildren item |> Seq.collect loop
+        yield item
+    }
+    source |> Seq.collect loop
+
+  let dlsKeyed getKey = dlsKeyedWith EqualityComparer<_>.Default getKey
+  let dlsWith comparer getChildren = dlsKeyedWith comparer id getChildren
+  let dls getChildren = dlsWith EqualityComparer<_>.Default getChildren
