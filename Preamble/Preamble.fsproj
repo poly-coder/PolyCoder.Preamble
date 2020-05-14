@@ -27,7 +27,9 @@
     <Compile Include="AsyncOption.fs" />
     <Compile Include="AsyncOptionFn.fs" />
     <Compile Include="Result.fs" />
+    <Compile Include="AsyncResult.fs" />
     <Compile Include="Map.fs" />
+    <Compile Include="Transformer.fs" />
   </ItemGroup>
 
   <ItemGroup>

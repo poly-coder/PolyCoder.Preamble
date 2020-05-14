@@ -24,7 +24,13 @@ module Result =
   let toList ma = ma |> matchWith List.singleton (konst List.empty)
   
   let toArray ma = ma |> matchWith Array.singleton (konst Array.empty)
-  
+
+  let unsafeGet = function
+    | Ok a -> a
+    | Error exn -> Exn.reraise exn
+
+  let pipeTo fb fa =
+    fa >> Result.bind fb
 
 [<RequireQualifiedAccess>]
 module ResultAnd =

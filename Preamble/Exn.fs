@@ -2,6 +2,7 @@ namespace PolyCoder
 
 open System
 open System.Reflection
+open System.Net
 
 [<RequireQualifiedAccess>]
 module Exn =
@@ -30,3 +31,7 @@ module Exn =
       | _ -> find e.InnerException
 
     find exn
+
+[<AutoOpen>]
+module ExnUtils =
+  let (|IsWebException|_|) (exn: exn) = Exn.findInner<WebException> exn

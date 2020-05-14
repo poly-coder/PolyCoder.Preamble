@@ -11,17 +11,20 @@ module Fn =
 type Sink<'a> = Fn<'a, unit>
 
 module Sink =
+  let protect sink a = try sink a with _ -> ()
+
   let ofAsync sink fn =
     async {
       let! result = fn()
-      sink result
+      (protect sink) result
     } |> Async.Start
 
   let toAsync (processFn: Sink<Sink<'value>>) =
     let source = TaskCompletionSource()
     let sink value = source.TrySetResult(value) |> ignore
-    processFn(sink)
+    (protect processFn) sink
     source.Task |> Async.AwaitTask
+
 
 type ResultSink<'a> = Sink<Result<'a, exn>>
 
@@ -30,9 +33,9 @@ module ResultSink =
     async {
       try
         let! result = fn()
-        sink (Ok result)
+        (Sink.protect sink) (Ok result)
       with
-        exn -> sink (Error exn)
+        exn -> (Sink.protect sink) (Error exn)
     } |> Async.Start
 
   let toAsync (processFn: Sink<ResultSink<'value>>) =
@@ -40,5 +43,5 @@ module ResultSink =
     let sink = function
       | Ok value -> source.TrySetResult(value) |> ignore
       | Error exn -> source.TrySetException(exn: exn) |> ignore
-    processFn(sink)
+    (Sink.protect processFn) sink
     source.Task |> Async.AwaitTask
