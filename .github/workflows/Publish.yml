@@ -17,17 +17,14 @@ jobs:
       with:
         dotnet-version: 3.1.201
 
-    - name: Install dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-
-    - name: Test
-      run: dotnet test --no-restore --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-
     - name: Install Report Generator
       run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Test
+      run: dotnet test --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
 
     - name: Generate Coverage Report
       run: reportgenerator -reports:**/coverage.cobertura.xml -targetdir:Report -reporttypes:HtmlInline_AzurePipelines;Cobertura
@@ -40,7 +37,7 @@ jobs:
         minimum_coverage: 75
 
     - name: Pack
-      run: dotnet pack --configuration Release --no-restore --output ./Preamble/bin/nupkg Preamble
+      run: dotnet pack --configuration Release --output ./Preamble/bin/nupkg Preamble
 
     - name: Publish
       run: dotnet nuget push ./Preamble/bin/nupkg/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_ORG_API_KEY }}

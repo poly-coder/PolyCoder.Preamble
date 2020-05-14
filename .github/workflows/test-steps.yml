@@ -1,8 +1,0 @@
-steps:
-- name: Test
-  run: dotnet test --no-restore --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-- name: Coverage
-  uses: 5monkeys/cobertura-action@master
-  with:
-    path: Preamble.Tests/coverage.cobertura.xml
-    minimum_coverage: 75
