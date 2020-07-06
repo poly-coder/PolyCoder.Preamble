@@ -25,6 +25,13 @@ module Sink =
     (protect processFn) sink
     source.Task |> Async.AwaitTask
 
+  let postToMailbox (fn: (Sink<'result>) -> 'command) (mailbox: MailboxProcessor<'command>) =
+    async {
+      let! value = mailbox.PostAndAsyncReply(fun reply -> fn reply.Reply)
+      return value
+    }
+
+
 
 type ResultSink<'a> = Sink<Result<'a, exn>>
 
@@ -45,3 +52,10 @@ module ResultSink =
       | Error exn -> source.TrySetException(exn: exn) |> ignore
     (Sink.protect processFn) sink
     source.Task |> Async.AwaitTask
+
+  let postToMailbox (fn: (ResultSink<'result>) -> 'command) (mailbox: MailboxProcessor<'command>) =
+    async {
+      match! mailbox.PostAndAsyncReply(fun reply -> fn reply.Reply) with
+      | Ok value -> return value
+      | Error exn -> return Exn.reraise exn
+    }

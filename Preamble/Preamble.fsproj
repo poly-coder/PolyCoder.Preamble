@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <PackageId>PolyCoder.Preamble</PackageId>
-    <Version>0.0.13</Version>
+    <Version>0.0.14</Version>
     <Authors>Iskander Sierra</Authors>
     <Company>PolyCoder</Company>
     <Product>PolyCoder FSharp Framework</Product>
@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Compile Include="Preamble.fs" />
+    <Compile Include="Tuples.fs" />
     <Compile Include="System.fs" />
     <Compile Include="Exn.fs" />
     <Compile Include="Fn.fs" />
@@ -30,6 +31,7 @@
     <Compile Include="AsyncResult.fs" />
     <Compile Include="Map.fs" />
     <Compile Include="Transformer.fs" />
+    <Compile Include="Convertion.fs" />
   </ItemGroup>
 
   <ItemGroup>
